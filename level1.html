@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>カウントアップアプリ</title>
+    <style>
+        /* ベーススタイル */
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f0f0f0;
+        }
+
+        /* カウンター表示 */
+        #counter {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* ボタン共通  .class 複数付与*/
+        .btn {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        /* ふぜろせいの属性 */
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+
+        .zero {
+            color: black;
+        }
+
+
+        /* 個別スタイル */
+        #increment {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #increment:hover {
+            background-color: #5645a0;
+        }
+
+        #decrease {
+            background-color: #3878a8
+        }
+
+        #decrease:hover {
+            background-color: #3c38a8
+        }
+
+        #reset {
+            background-color: #f44336;
+            color: white;
+        }
+
+        #reset:hover {
+            background-color: #e535c5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="counter" class="zero">0</div>
+    <button id="increment" class="btn">カウントアップ</button>
+    <button id="reset" class="btn">リセット</button>
+    <button id="decrease" class="btn">カウントダウン</button>
+
+    <script>
+        // 1. 要素を取得
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const display = document.getElementById('counter');// div
+            const incBtn = document.getElementById('increment');// increment button
+            const resetBtn = document.getElementById('reset');//
+            const downBtn = document.getElementById('decrease')
+            const max_count = 10;
+            const lim_count = -10;
+
+            // 2. カウント用の変数
+            let count = 0;
+            //6.一律更新
+            function updateDisplay() {
+
+                display.textContent = count; //textContentの役割 - 子要素のタグを無視し、テキストだけをシンプルに扱える
+                display.classList.remove('positive', 'negative', 'zero');
+
+                if (count > 0) {
+                    display.classList.add('positive');
+                } else if (count == 0) {
+                    display.classList.add('zero');
+                } else {
+                    display.classList.add('negative');
+                }
+            }
+            // 3. カウントアップの関数
+            function increment() {
+                if (count >= max_count) {
+                    return;
+                }
+                count += 1;
+                updateDisplay();
+            }
+
+
+            // 4. リセットの関数
+            function reset() {
+                count = 0;
+                updateDisplay();
+
+            }
+            function drec() {
+                if (count <= lim_count) {
+                    console.log('NO LONGER DECREASE');
+                    return;
+                }
+                count += -1;
+                updateDisplay();
+            }
+
+
+
+            // 5. イベントリスナーを登録
+            incBtn.addEventListener('click', increment);//target.addEventListener(条件,実行関数)
+            resetBtn.addEventListener('click', reset);
+            downBtn.addEventListener('click', drec);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft')   drec();
+                else if (e.key === 'ArrowRight') increment();
+                else if (e.key === 'ArrowDown') reset();
+            });
+                    
+        
+            });
+
+    </script>
+</body>
+
+</html>
